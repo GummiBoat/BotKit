@@ -7,12 +7,12 @@ exports.run = (client, message, args, config, table, randomstring) => {
     message.author.send('Please provide a proper Gamekit profile URL.');
     return;
   }
-  var temp = args[0].replace('https://gamekit.com/profil/', '').replace('/','');
-  var profile = temp.replace(/[^a-z0-9]/gi,''); //removes anything that's not alphanumerical
+  var profile = args[0].replace('https://gamekit.com/profil/', '').replace('/','');
   if(profile.length >= 13){
     message.author.send('Please provide a proper Gamekit profile URL.');
     return;
   }
+  console.log('Got profile ' + profile + ", sending pm...");
   let user = client.getUser.get(message.author.id);
   if(!user || args.length >=1 && args[1] === 'replace'){
     let code = randomstring.generate(10);
@@ -25,6 +25,7 @@ exports.run = (client, message, args, config, table, randomstring) => {
     client.setUser.run(user);
     let commandFile = require('../puppet.js');
     commandFile.run(user.gamekit_id, user.code, config);
+    console.log('The user should\'ve gotten a pm on gamekit now');
     message.author.send('You received a private message on Gamekit, please read it and enter the verification code here with \`.verify <code>\`.');
   } else {
     message.author.send('You already set your profile link. If you want to change it, use \`.profile <url> replace\`.');
