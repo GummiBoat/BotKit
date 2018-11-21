@@ -1,12 +1,20 @@
 exports.run = (client, message, args) => {
+  // Get Member
   var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
+
+  // Needs to be Moderator
   if(!member.roles.has('424545380932517888')){
 	  message.reply('you are not a moderator! >:(');
   }
-  
+
+  // If no arguments
   if (args.length == 0){
+
+    // Get user
     let user = client.getUser.get(message.author.id);
+
+    // Handle Message
     if(!user)
       message.reply('you are not verified yet.');
     else
@@ -30,8 +38,12 @@ exports.run = (client, message, args) => {
     			text: "(c) BotKit"
     		}
     	}});
+
+  // If arguments
   } else {
+    // Get mentions
     let member = message.mentions.members.first();
+    // Handle message like above
     if(member){
       let user = client.getUser.get(member.id);
       if(!user)

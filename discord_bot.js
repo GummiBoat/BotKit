@@ -1,12 +1,13 @@
-const config = require('./config.json');
-const fs = require("fs");
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const SQLite = require("better-sqlite3");
-const sql = new SQLite('./users.sqlite');
-var randomstring = require("randomstring");
-const talkedRecently = new Set();
+const config = require('./config.json'); // Get config
+const fs = require("fs"); // Needs filestream for events
+const Discord = require("discord.js"); // Needs discord.js ... duh
+const client = new Discord.Client(); // New Discord Client, needs to be set here
+const SQLite = require("better-sqlite3"); // Needs sqlite for database
+const sql = new SQLite('./users.sqlite'); // Retrieve database
+var randomstring = require("randomstring"); // Needs randomstring for code generation
+const talkedRecently = new Set(); // Cooldown for commands
 
+// Prepare table
 const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'users';").get();
 if (!table['count(*)']) {
   // If the table isn't there, create and setup.
