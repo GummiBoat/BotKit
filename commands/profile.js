@@ -4,6 +4,7 @@ exports.run = (client, message, args) => {
   if(!member.roles.has('424545380932517888')){
 	  message.reply('you are not a moderator! >:(');
   }
+  
   if (args.length == 0){
     let user = client.getUser.get(message.author.id);
     if(!user)
@@ -39,8 +40,8 @@ exports.run = (client, message, args) => {
       	message.channel.send({embed: {
       		color: 4273849,
       		author: {
-      			name: user.username,
-      			icon_url: user.avatarURL
+      			name: member.user.username,
+      			icon_url: member.user.avatarURL
       		},
       		fields: [{
       			name: "Gamekit URL",
