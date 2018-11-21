@@ -25,8 +25,7 @@ exports.run = (id, code, config) => {
     await page.focus(MESSAGE_SELECTOR);
     await page.keyboard.type(`Please type following on Discord: .verify ${code}`);
 
-    //await page.click(SEND_SELECTOR);
-    await page.screenshot({path: 'gamekit.png'});
+    await page.click(SEND_SELECTOR);
 
     await browser.close();
   })();
