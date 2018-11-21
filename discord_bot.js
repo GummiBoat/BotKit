@@ -1,9 +1,9 @@
 const config = require('./config.json'); // Get config
-const fs = require("fs"); // Needs filestream for events
 const Discord = require("discord.js"); // Needs discord.js ... duh
 const client = new Discord.Client(); // New Discord Client, needs to be set here
 const SQLite = require("better-sqlite3"); // Needs sqlite for database
 const sql = new SQLite('./users.sqlite'); // Retrieve database
+const fs = require("fs"); // Needs filestream for events
 var randomstring = require("randomstring"); // Needs randomstring for code generation
 const talkedRecently = new Set(); // Cooldown for commands
 
