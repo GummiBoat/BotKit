@@ -9,7 +9,10 @@ exports.run = (client, message, args, table, randomstring) => {
     });
   } else {
     if(args.length <= 0) {
-      message.author.send('Thank you for starting the verification process. Please provide the link to your gamekit profile by using \`.profile <url>\` here.');
+      message.author.send('Thank you for starting the verification process. Please provide the link to your gamekit profile by using \`.profile <url>\` here.')
+	  .then(msg => {
+		  message.delete();
+	  });
       return;
     } else {
       if(message.guild !== null) return;

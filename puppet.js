@@ -27,6 +27,7 @@ exports.run = (id, code, config) => {
     await page.keyboard.type(`Please type following on Discord: .verify ${code}`);
 
     await page.click(SEND_SELECTOR);
+	await page.evaluate("$('#replay-msg-form > button').click();");
 
     await browser.close();
   })();
