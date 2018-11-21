@@ -48,7 +48,7 @@ client.on("message", (message) => {
     talkedRecently.delete(message.author.id);
   }, 5000)
   // Trim args and command from message
-  var guilds = client.guilds.get('473087906051915786');
+  var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
   if(!member.roles.has('424545380932517888')) return;
 	const args = message.content.slice(config.prefix.length).trim().split(/ +/g);

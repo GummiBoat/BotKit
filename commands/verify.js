@@ -1,5 +1,5 @@
 exports.run = (client, message, args, table, randomstring) => {
-  var guilds = client.guilds.get('473087906051915786');
+  var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
   if(member === null) return;
   if(member.roles.has('514465659250278429')) {
