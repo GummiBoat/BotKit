@@ -1,6 +1,6 @@
 exports.run = (client, message, args, config, table, randomstring) => {
   if(message.guild !== null) return;
-  var guilds = client.guilds.get('473087906051915786');
+  var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
   if(member === null) return;
   if(!args[0].startsWith('https://gamekit.com/profil/')){

@@ -2,7 +2,7 @@ exports.run = (client, message, args, table, randomstring) => {
   var guilds = client.guilds.get('473087906051915786');
   var member = guilds.members.get(message.author.id);
   if(member === null) return;
-  if(member.roles.has('511932460330909717')) {
+  if(member.roles.has('514465659250278429')) {
     message.reply('you\'re already verified.')
     .then(msg => {
       msg.delete(5000);
@@ -22,7 +22,7 @@ exports.run = (client, message, args, table, randomstring) => {
           message.author.send('That was the wrong code. If you want to replace your gamekit id due to making a mistake, use \`.profile <url> replace\`.');
         else {
           user.verified = 'true';
-          member.addRole('511932460330909717');
+          member.addRole('514465659250278429');
           message.author.send('You should now be verified! Thank you and have fun!');
         }
       }
