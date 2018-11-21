@@ -12,9 +12,9 @@ exports.run = (client, message, args, config, table, randomstring) => {
     message.author.send('Please provide a proper Gamekit profile URL.');
     return;
   }
-  console.log('Got profile ' + profile + ", sending pm...");
   let user = client.getUser.get(message.author.id);
   if(!user || args.length >=1 && args[1] === 'replace'){
+    console.log('Got profile ' + profile + ", sending pm...");
     let code = randomstring.generate(10);
     user = {
       discord_id: message.author.id,
