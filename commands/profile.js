@@ -7,7 +7,8 @@ exports.run = (client, message, args, config, table, randomstring) => {
     message.author.send('Please provide a proper Gamekit profile URL.');
     return;
   }
-  var profile = args[0].replace('https://gamekit.com/profil/', '').replace('/','');
+  var temp = args[0].replace('https://gamekit.com/profil/', '').replace('/','');
+  var profile = temp.replace(/[^a-z0-9]/gi,''); //removes anything that's not alphanumerical
   if(profile.length >= 13){
     message.author.send('Please provide a proper Gamekit profile URL.');
     return;
