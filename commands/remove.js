@@ -21,7 +21,7 @@ exports.run = (client, message, args, config) => {
 
   // Check for and remove role
   if(user.roles.has('514465659250278429'))
-    user.roles.removeRole('514465659250278429');
+    user.removeRole('514465659250278429');
   else
     message.channel.send('That user does not have the verify role, trying to remove from database anyways.')
     .then(msg => {
