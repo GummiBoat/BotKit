@@ -1,11 +1,4 @@
-exports.run = (client, message, args) => {
-  // Get Member
-  var guilds = client.guilds.get('424539676389408779');
-  var member = guilds.members.get(message.author.id);
-
-  // If Member not in Guild
-  if(member === null) return;
-
+exports.run = (client, message, args, member) => {
   // If Member has the verified role
   if(member.roles.has('514465659250278429')) {
     message.reply('you\'re already verified.')
@@ -20,21 +13,19 @@ exports.run = (client, message, args) => {
 	  });
       return;
     } else {
-      // Needs to be a DM
-      if(message.guild !== null) return;
       // Get User
       let user = client.getUser.get(message.author.id);
       if(!user){
-        message.author.send('You have not provided a link to your profile yet. Please do so with \`.link <url>\`.');
+        message.channel.send('You have not provided a link to your profile yet. Please do so with \`.link <url>\`.');
         return;
       } else {
         if(args[0] !== user.code)
-          message.author.send('That was the wrong code. If you want to replace your gamekit id due to making a mistake, use \`.link <url> replace\`.');
+          message.channel.send('That was the wrong code. If you want to replace your gamekit id due to making a mistake, use \`.link <url> replace\`.');
         else {
           // Give role and set User later on
           user.verified = 'true';
           member.addRole('514465659250278429');
-          message.author.send('You should now be verified! Thank you and have fun!');
+          message.channel.send('You should now be verified! Thank you and have fun!');
         }
       }
       client.setUser.run(user);

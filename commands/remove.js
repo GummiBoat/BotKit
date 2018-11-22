@@ -1,8 +1,4 @@
-exports.run = (client, message, args, config) => {
-  // Get Member
-  var guilds = client.guilds.get('424539676389408779');
-  var member = guilds.members.get(message.author.id);
-
+exports.run = (client, message, args, member, config) => {
   // Needs to be Moderator
   if(!member.roles.has('424545380932517888')){
 	  message.reply('you are not a moderator! >:(');

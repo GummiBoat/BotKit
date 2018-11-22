@@ -37,9 +37,10 @@ client.on("message", (message) => {
   // Check user and prefix
 	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
 
-  // Temporary check for moderator role, remove later
+  // Check if user is on Gamekit, temporary check for moderator role, remove later
   var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
+  if(member === null) return;
   if(!member.roles.has('424545380932517888')) return;
 
   // 5s cooldown on commands
@@ -61,7 +62,7 @@ client.on("message", (message) => {
   // Load file from command
 	try {
 		let commandFile = require(`./commands/${command}.js`);
-		commandFile.run(client, message, args, config);
+		commandFile.run(client, message, args, member, config);
 	} catch (err) {
 		//console.error(err);
 	}

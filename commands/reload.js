@@ -1,4 +1,4 @@
-exports.run = (client, message, args, config) => {
+exports.run = (client, message, args, member, config) => {
 	// Needs to be owner, specified in config
 	if(message.author.id !== config.owner) return message.channel.send(`❌ **| I'm sorry ${message.author.username}, I'm afraid I can't let you do that.**`);
 
