@@ -20,7 +20,7 @@ if (!table['count(*)']) {
 // Prepared Statements
 client.getUser = sql.prepare("SELECT * FROM users WHERE discord_id = ?");
 client.setUser = sql.prepare("INSERT OR REPLACE INTO users (discord_id, gamekit_id, code, verified) VALUES (@discord_id, @gamekit_id, @code, @verified);");
-client.remUser = sql.prepare("DELETE * FROM users WHERE discord_id = ?");
+client.remUser = sql.prepare("DELETE FROM users WHERE discord_id = ?");
 
 // Load events, this lets us add and remove events on runtime due to filestream
 fs.readdir("./events/", (err, files) => {
