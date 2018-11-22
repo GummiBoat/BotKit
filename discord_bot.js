@@ -4,7 +4,6 @@ const client = new Discord.Client(); // New Discord Client, needs to be set here
 const SQLite = require("better-sqlite3"); // Needs sqlite for database
 const sql = new SQLite('./users.sqlite'); // Retrieve database
 const fs = require("fs"); // Needs filestream for events
-var randomstring = require("randomstring"); // Needs randomstring for code generation
 const talkedRecently = new Set(); // Cooldown for commands
 
 // Prepare table
@@ -21,6 +20,7 @@ if (!table['count(*)']) {
 // Prepared Statements
 client.getUser = sql.prepare("SELECT * FROM users WHERE discord_id = ?");
 client.setUser = sql.prepare("INSERT OR REPLACE INTO users (discord_id, gamekit_id, code, verified) VALUES (@discord_id, @gamekit_id, @code, @verified);");
+client.remUser = sql.prepare("DELETE * FROM users WHERE discord_id = ?");
 
 // Load events, this lets us add and remove events on runtime due to filestream
 fs.readdir("./events/", (err, files) => {
@@ -36,6 +36,12 @@ fs.readdir("./events/", (err, files) => {
 client.on("message", (message) => {
   // Check user and prefix
 	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
+
+  // Temporary check for moderator role, remove later
+  var guilds = client.guilds.get('424539676389408779');
+  var member = guilds.members.get(message.author.id);
+  if(!member.roles.has('424545380932517888')) return;
+
   // 5s cooldown on commands
   if(talkedRecently.has(message.author.id)){
     message.channel.send('Woah there! Not so fast!')
@@ -48,16 +54,14 @@ client.on("message", (message) => {
   setTimeout(()=>{
     talkedRecently.delete(message.author.id);
   }, 5000)
+
   // Trim args and command from message
-  var guilds = client.guilds.get('424539676389408779');
-  var member = guilds.members.get(message.author.id);
-  if(!member.roles.has('424545380932517888')) return;
 	const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
   // Load file from command
 	try {
 		let commandFile = require(`./commands/${command}.js`);
-		commandFile.run(client, message, args, config, table, randomstring);
+		commandFile.run(client, message, args, config);
 	} catch (err) {
 		//console.error(err);
 	}

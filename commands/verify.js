@@ -1,4 +1,4 @@
-exports.run = (client, message, args, table, randomstring) => {
+exports.run = (client, message, args) => {
   // Get Member
   var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);

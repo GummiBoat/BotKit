@@ -1,4 +1,4 @@
-exports.run = (client, message, args, config, table, randomstring) => {
+exports.run = (client, message, args, config) => {
   // Needs to be a DM
   if(message.guild !== null) return;
 
@@ -27,7 +27,7 @@ exports.run = (client, message, args, config, table, randomstring) => {
   // If user doesn't exist or arg[1] is replace
   if(!user || args.length >=1 && args[1] === 'replace'){
     // Generate code and set default values
-    let code = randomstring.generate(10);
+    let code = require("randomstring").generate(10);
     user = {
       discord_id: message.author.id,
       gamekit_id: profile,

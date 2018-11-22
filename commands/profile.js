@@ -6,6 +6,7 @@ exports.run = (client, message, args) => {
   // Needs to be Moderator
   if(!member.roles.has('424545380932517888')){
 	  message.reply('you are not a moderator! >:(');
+    return;
   }
 
   // If no arguments
