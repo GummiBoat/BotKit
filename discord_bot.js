@@ -48,7 +48,7 @@ client.on("message", (message) => {
     .then(msg => {
       msg.delete(3000)
     });
-    message.delete();
+    if(message.guild !== null) message.delete();
     return;
   }
   talkedRecently.add(message.author.id);
