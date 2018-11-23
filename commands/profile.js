@@ -5,6 +5,7 @@ exports.run = (client, message, args, member) => {
     .then(msg => {
         msg.delete(5000);
     });
+    if(message.guild !== null) message.delete();
     return;
   }
 
@@ -76,4 +77,5 @@ exports.run = (client, message, args, member) => {
       });
     }
   }
+  if(message.guild !== null) message.delete();
 }

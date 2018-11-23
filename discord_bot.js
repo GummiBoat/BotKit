@@ -37,6 +37,15 @@ client.on("message", (message) => {
   // Check user and prefix
 	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
 
+  if(message.author.presence.status === 'offline'){
+    message.reply('you are being displayed as offline. Please go online to use the bot.')
+    .then(msg => {
+      msg.delete(5000);
+      if(message.guild !== null) message.delete();
+    });
+    return;
+  }
+
   // Check if user is on Gamekit
   var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
@@ -63,13 +72,17 @@ client.on("message", (message) => {
 	try {
 		let commandFile = require(`./commands/${command}.js`);
 		commandFile.run(client, message, args, member, config);
-    if(message.guild !== null) message.delete();
 	} catch (err) {
     if(err.code === 'MODULE_NOT_FOUND')
       console.error('Caught invalid command: ' + command);
     else
 		  console.error(err);
 	}
+});
+
+// Close connection to database on exit
+process.on('exit', (code) => {
+  sql.close();
 });
 
 console.log("Logging in...");

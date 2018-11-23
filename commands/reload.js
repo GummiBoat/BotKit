@@ -11,4 +11,5 @@ exports.run = (client, message, args, member, config) => {
 	.then(msg => {
 			msg.delete(5000);
 	});
+	if(message.guild !== null) message.delete();
 };

@@ -26,7 +26,7 @@ exports.run = (id, code, config) => {
 
     // Message
     await page.focus(MESSAGE_SELECTOR);
-    await page.keyboard.type(`Please type following on Discord: .verify ${code}`);
+    await page.keyboard.type(`Please type following on Discord: >verify ${code}`);
 
     // Click send AND evaluate a button click. This fixes the strange behaviour of Gamekit not recognizing the page.click on first messages with a user. Doesn't affect known users.
     await page.click(SEND_SELECTOR);

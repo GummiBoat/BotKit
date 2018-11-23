@@ -1,17 +1,19 @@
 exports.run = (client, message, args, member, config) => {
   // Needs to be Moderator
-  if(!member.roles.has('424545380932517888')){
-	  message.reply('you are not a moderator! >:(');
+  if(!member.roles.has('424540236538970113')){
+	  message.reply('you are not an admin! >:(');
+    if(message.guild !== null) message.delete();
     return;
   }
 
   // Grabs and checks mention
   let user = message.mentions.members.first();
   if(!user){
-    message.channel.send('Please use `.remove @user`')
+    message.channel.send('Please use `>remove @user`')
     .then(msg => {
       msg.delete(5000);
     });
+    if(message.guild !== null) message.delete();
     return;
   }
 
@@ -30,4 +32,5 @@ exports.run = (client, message, args, member, config) => {
   .then(msg => {
       msg.delete(5000);
   });
+  if(message.guild !== null) message.delete();
 };
