@@ -26,5 +26,8 @@ exports.run = (client, message, args, member, config) => {
 
   // Remove user from database
   client.remUser.run(user.id);
-  message.channel.send('User **' + user.displayName + '** is no longer verified.');
+  message.channel.send('User **' + user.displayName + '** is no longer verified.')
+  .then(msg => {
+      msg.delete(5000);
+  });
 };

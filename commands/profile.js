@@ -1,7 +1,10 @@
 exports.run = (client, message, args, member) => {
   // Needs to be Moderator
   if(!member.roles.has('424545380932517888')){
-	  message.reply('you are not a moderator! >:(');
+	  message.reply('you are not a moderator! >:(')
+    .then(msg => {
+        msg.delete(5000);
+    });
     return;
   }
 
@@ -11,7 +14,10 @@ exports.run = (client, message, args, member) => {
     let user = client.getUser.get(message.author.id);
     // Handle Message
     if(!user)
-      message.reply('you are not verified yet.');
+      message.reply('you are not verified yet.')
+      .then(msg => {
+          msg.delete(5000);
+      });
     else
     	message.channel.send({embed: {
     		color: 4273849,
@@ -64,7 +70,10 @@ exports.run = (client, message, args, member) => {
       		}
       	}});
     } else {
-      message.reply('that is not a valid mention.');
+      message.reply('that is not a valid mention.')
+      .then(msg => {
+          msg.delete(5000);
+      });
     }
   }
 }

@@ -37,11 +37,10 @@ client.on("message", (message) => {
   // Check user and prefix
 	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
 
-  // Check if user is on Gamekit, temporary check for moderator role, remove later
+  // Check if user is on Gamekit
   var guilds = client.guilds.get('424539676389408779');
   var member = guilds.members.get(message.author.id);
   if(member === null) return;
-  if(!member.roles.has('424545380932517888')) return;
 
   // 5s cooldown on commands
   if(talkedRecently.has(message.author.id)){
@@ -49,6 +48,7 @@ client.on("message", (message) => {
     .then(msg => {
       msg.delete(3000)
     });
+    message.delete();
     return;
   }
   talkedRecently.add(message.author.id);
@@ -63,8 +63,12 @@ client.on("message", (message) => {
 	try {
 		let commandFile = require(`./commands/${command}.js`);
 		commandFile.run(client, message, args, member, config);
+    if(message.guild !== null) message.delete();
 	} catch (err) {
-		//console.error(err);
+    if(err.code === 'MODULE_NOT_FOUND')
+      console.error('Caught invalid command: ' + command);
+    else
+		  console.error(err);
 	}
 });
 

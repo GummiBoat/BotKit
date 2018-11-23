@@ -7,5 +7,8 @@ exports.run = (client, message, args, member, config) => {
 
 	// Remove commandfile from cache
 	delete require.cache[require.resolve(`./${args[0]}.js`)];
-	message.reply(`The command ${args[0]} has been reloaded`);
+	message.reply(`The command ${args[0]} has been reloaded`)
+	.then(msg => {
+			msg.delete(5000);
+	});
 };
