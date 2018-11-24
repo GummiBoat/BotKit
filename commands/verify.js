@@ -7,14 +7,14 @@ exports.run = (client, message, args, member) => {
     });
   } else {
     if(args.length <= 0) {
-      message.author.send('Thank you for starting the verification process. Please provide the link to your gamekit profile by using \`>link <url>\` here.');
+      message.author.send('Thank you for starting the verification process. Please provide the link to your gamekit profile by using \`>link [url]\` (without []) here.');
       if(message.guild !== null) message.delete();
       return;
     } else {
       // Get User
       let user = client.getUser.get(message.author.id);
       if(!user){
-        message.channel.send('You have not provided a link to your profile yet. Please do so with \`>link <url>\`.')
+        message.channel.send('You have not provided a link to your profile yet. Please do so with \`>link [url]\` (without []).')
         .then(msg => {
             msg.delete(5000);
         });
@@ -22,7 +22,7 @@ exports.run = (client, message, args, member) => {
         return;
       } else {
         if(args[0] !== user.code)
-          message.channel.send('That was the wrong code. If you want to replace your gamekit id due to making a mistake, use \`>link <url> replace\`.')
+          message.channel.send('That was the wrong code. If you want to replace your gamekit id due to making a mistake, use \`>link [url] replace\` (without []).')
           .then(msg => {
               msg.delete(10000);
           });

@@ -39,12 +39,12 @@ exports.run = (client, message, args, member, config) => {
     // Send code on Gamekit
     let commandFile = require('../puppet.js');
     commandFile.run(user.gamekit_id, user.code, config);
-    message.channel.send('You received a private message on Gamekit, please read it and enter the verification code here with \`>verify <code>\`.')
+    message.channel.send('You received a private message on Gamekit, please read it and enter the verification code here with \`>verify [code]\` (without []).')
     .then(msg => {
         msg.delete(10000);
     });
   } else {
-    message.channel.send('You already set your profile link. If you want to change it, use \`>link <url> replace\`.')
+    message.channel.send('You already set your profile link. If you want to change it, use \`>link [url] replace\` (without []).')
     .then(msg => {
         msg.delete(10000);
     });
