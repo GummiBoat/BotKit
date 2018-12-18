@@ -5,6 +5,10 @@ const SQLite = require("better-sqlite3"); // Needs sqlite for database
 const sql = new SQLite('./users.sqlite'); // Retrieve database
 const fs = require("fs"); // Needs filestream for events
 const talkedRecently = new Set(); // Cooldown for commands
+const commands = {"avatar":"avatar","eval":"eval","help":"help","link":"link","mlem":"mlem","profile":"profile","reload":"reload","remove":"remove","verify":"verify"};
+
+client.config = config;
+client.talkedRecently = talkedRecently;
 
 // Prepare table
 const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'users';").get();
@@ -21,6 +25,7 @@ if (!table['count(*)']) {
 client.getUser = sql.prepare("SELECT * FROM users WHERE discord_id = ?");
 client.setUser = sql.prepare("INSERT OR REPLACE INTO users (discord_id, gamekit_id, code, verified) VALUES (@discord_id, @gamekit_id, @code, @verified);");
 client.remUser = sql.prepare("DELETE FROM users WHERE discord_id = ?");
+client.logLink = sql.prepare("INSERT INTO links (url, correct) VALUES (@url, @correct);");
 
 // Load events, this lets us add and remove events on runtime due to filestream
 fs.readdir("./events/", (err, files) => {
@@ -36,6 +41,12 @@ fs.readdir("./events/", (err, files) => {
 client.on("message", (message) => {
   // Check user and prefix
 	if(message.author.bot || message.content.indexOf(config.prefix) !== 0) return;
+
+  // Trim args and command from message
+	const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+	const command = args.shift().toLowerCase();
+
+  if(!commands[command]) return;
 
   if(message.author.presence.status === 'offline'){
     message.reply('you are being displayed as offline. Please go online to use the bot.')
@@ -64,14 +75,10 @@ client.on("message", (message) => {
   setTimeout(()=>{
     talkedRecently.delete(message.author.id);
   }, 5000)
-
-  // Trim args and command from message
-	const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-	const command = args.shift().toLowerCase();
   // Load file from command
 	try {
 		let commandFile = require(`./commands/${command}.js`);
-		commandFile.run(client, message, args, member, config);
+		commandFile.run(client, message, args, member);
 	} catch (err) {
     if(err.code === 'MODULE_NOT_FOUND')
       console.error('Caught invalid command: ' + command);

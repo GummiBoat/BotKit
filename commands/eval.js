@@ -1,6 +1,6 @@
-exports.run = (client, message, args, member, config) => {
+exports.run = (client, message, args, member) => {
 	// Needs to be owner, specified in config
-	if(message.author.id !== config.owner) return message.channel.send(`❌ **| I'm sorry ${message.author.username}, I'm afraid I can't let you do that.**`);
+	if(message.author.id !== client.config.owner) return message.channel.send(`❌ **| I'm sorry ${message.author.username}, I'm afraid I can't let you do that.**`);
 
 	// Implement clean
 	const clean = text => {

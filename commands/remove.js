@@ -1,4 +1,4 @@
-exports.run = (client, message, args, member, config) => {
+exports.run = (client, message, args, member) => {
   // Needs to be Moderator
   if(!member.roles.has('424540236538970113')){
 	  message.reply('you are not an admin! >:(');

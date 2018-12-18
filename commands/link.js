@@ -1,6 +1,7 @@
-exports.run = (client, message, args, member, config) => {
+exports.run = (client, message, args, member) => {
   // Needs to start with the link
-  if(!args[0].startsWith('https://gamekit.com/profil/')){
+  if(args.length !== 1 || !args[0].startsWith('https://gamekit.com/profil/')){
+    client.logLink.run({url:args[0], correct:'false'});
     message.channel.send('Please provide a proper Gamekit profile URL.')
     .then(msg => {
         msg.delete(5000);
@@ -14,6 +15,7 @@ exports.run = (client, message, args, member, config) => {
 
   // Needs to be shorter than 13 chars, this basically prevents anything funky
   if(profile.length >= 13){
+    client.logLink.run({url:args[0], correct:'false'});
     message.channel.send('Please provide a proper Gamekit profile URL.')
     .then(msg => {
         msg.delete(5000);
@@ -26,6 +28,7 @@ exports.run = (client, message, args, member, config) => {
   let user = client.getUser.get(message.author.id);
   // If user doesn't exist or arg[1] is replace
   if(!user || args.length >=1 && args[1] === 'replace'){
+    client.logLink.run({url:args[0], correct:'true'});
     // Generate code and set default values
     let code = require("randomstring").generate(10);
     user = {
@@ -38,7 +41,7 @@ exports.run = (client, message, args, member, config) => {
     client.setUser.run(user);
     // Send code on Gamekit
     let commandFile = require('../puppet.js');
-    commandFile.run(user.gamekit_id, user.code, config);
+    commandFile.run(user.gamekit_id, user.code, client.config);
     message.channel.send('You received a private message on Gamekit, please read it and enter the verification code here with \`>verify [code]\` (without []).')
     .then(msg => {
         msg.delete(10000);
