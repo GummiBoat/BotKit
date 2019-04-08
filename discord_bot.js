@@ -5,7 +5,7 @@ const SQLite = require("better-sqlite3"); // Needs sqlite for database
 const sql = new SQLite('./users.sqlite'); // Retrieve database
 const fs = require("fs"); // Needs filestream for events
 const talkedRecently = new Set(); // Cooldown for commands
-const commands = {"avatar":"avatar","eval":"eval","help":"help","link":"link","mlem":"mlem","profile":"profile","reload":"reload","remove":"remove","verify":"verify"};
+const commands = {"avatar":"avatar","eval":"eval","help":"help","ping":"ping","link":"link","profile":"profile","reload":"reload","remove":"remove","verify":"verify"};
 
 client.config = config;
 client.talkedRecently = talkedRecently;
@@ -23,9 +23,9 @@ if (!table['count(*)']) {
 
 // Prepared Statements
 client.getUser = sql.prepare("SELECT * FROM users WHERE discord_id = ?");
+client.getGkUser = sql.prepare("SELECT * FROM users WHERE gamekit_id = ?");
 client.setUser = sql.prepare("INSERT OR REPLACE INTO users (discord_id, gamekit_id, code, verified) VALUES (@discord_id, @gamekit_id, @code, @verified);");
 client.remUser = sql.prepare("DELETE FROM users WHERE discord_id = ?");
-client.logLink = sql.prepare("INSERT INTO links (url, correct) VALUES (@url, @correct);");
 
 // Load events, this lets us add and remove events on runtime due to filestream
 fs.readdir("./events/", (err, files) => {
