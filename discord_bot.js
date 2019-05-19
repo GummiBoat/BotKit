@@ -5,7 +5,7 @@ const SQLite = require("better-sqlite3"); // Needs sqlite for database
 const sql = new SQLite('./users.sqlite'); // Retrieve database
 const fs = require("fs"); // Needs filestream for events
 const talkedRecently = new Set(); // Cooldown for commands
-const commands = {"avatar":"avatar","eval":"eval","help":"help","ping":"ping","link":"link","profile":"profile","reload":"reload","remove":"remove","verify":"verify"};
+const commands = {"eval":"eval","help":"help","link":"link","profile":"profile","reload":"reload","remove":"remove","stream":"stream","verify":"verify"};
 
 client.config = config;
 client.talkedRecently = talkedRecently;

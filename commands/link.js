@@ -1,4 +1,4 @@
-exports.run = (client, message, args, member) => {
+exports.run = (client, message, args) => {
   // Needs to start with the link
   if(args.length == 0 || !args[0].startsWith('https://gamekit.com/profil/')){
     message.channel.send('Please provide a proper Gamekit profile URL. (URL needs to start with `https://gamekit.com/profil/`)')
@@ -12,14 +12,8 @@ exports.run = (client, message, args, member) => {
   // Remove link to get only user id
   var profile = args[0].replace('https://gamekit.com/profil/', '').replace('/','');
 
-  var max_length = 13;
-
-  if(args.length > 1 && args[1] === 'replace'){
-    max_length += 8;
-  }
-
-  // Needs to be shorter than 13 chars, this basically prevents anything funky
-  if(profile.length >= max_length) {
+  // Needs to be shorter than 21 chars, this basically prevents anything funky
+  if(profile.length >= 21) {
     message.channel.send('Please provide a proper Gamekit profile URL. (The profile is too long, are you sure you\'re copying the right URL?)')
     .then(msg => {
         msg.delete(5000);
@@ -58,8 +52,9 @@ exports.run = (client, message, args, member) => {
     // Set user
     client.setUser.run(user);
     // Send code on Gamekit
-    let commandFile = require('../puppet.js');
-    commandFile.run(user.gamekit_id, user.code, client.config);
+    var child_process = require('child_process');
+    var cmd = `curl --silent "https://gamekit.com/messages/message/s/send/" -H "cookie: ${client.config.cookie_name}=${client.config.cookie_value};" --data "m_content=Please+type+the+following+on+Discord%3A+%3Everify+${code}&u_id=${profile}"`;
+    child_process.execSync(cmd);
     message.channel.send('You received a private message on Gamekit (https://gamekit.com/messages/124109748/), please read it and enter the verification code here with `>verify [code]` (without []).')
     .then(msg => {
         msg.delete(10000);
